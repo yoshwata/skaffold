@@ -22,7 +22,6 @@ import (
 	"io"
 	"time"
 
-	cfg "github.com/GoogleContainerTools/skaffold/cmd/skaffold/app/cmd/config"
 	"github.com/GoogleContainerTools/skaffold/pkg/skaffold/build"
 	"github.com/GoogleContainerTools/skaffold/pkg/skaffold/build/cache"
 	"github.com/GoogleContainerTools/skaffold/pkg/skaffold/build/cluster"
@@ -203,18 +202,6 @@ func getTagger(t latest.TagPolicy, customTag string) (tag.Tagger, error) {
 	}
 }
 
-func (r *SkaffoldRunner) Deploy(ctx context.Context, out io.Writer, artifacts []build.Artifact) error {
-	if cfg.IsKindCluster(r.runCtx.KubeContext) {
-		// With `kind`, docker images have to be loaded with the `kind` CLI.
-		if err := r.loadImagesInKindNodes(ctx, out, artifacts); err != nil {
-			return errors.Wrapf(err, "loading images into kind nodes")
-		}
-	}
-
-	err := r.Deployer.Deploy(ctx, out, artifacts, r.labellers)
-	r.hasDeployed = true
-	return err
-}
 
 // HasDeployed returns true if this runner has deployed something.
 func (r *SkaffoldRunner) HasDeployed() bool {
