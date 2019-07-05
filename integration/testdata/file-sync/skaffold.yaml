@@ -1,16 +1,18 @@
 apiVersion: skaffold/v1beta12
 kind: Config
 build:
-  tagPolicy:
-    gitCommit: {}
+  # tagPolicy:
+  #   gitCommit: {}
   artifacts:
-  - image: gcr.io/k8s-skaffold/test-file-sync
+  - image: yoshwata/test-file-sync
     context: .
     sync:
       manual:
-      - src: '**/foo*'
-        dest: /test
+      # - src: '**/foo*'
+      - src: 'foo'
+      #   # dest: /test
+        dest: /
 deploy:
  kubectl:
    manifests:
-   - pod.yaml
+   - deployment.yaml
