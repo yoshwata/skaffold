@@ -172,6 +172,7 @@ func (h *HelmDeployer) deployRelease(ctx context.Context, out io.Writer, r lates
 	if err != nil {
 		return nil, errors.Wrap(err, "matching build results to chart values")
 	}
+
 	var setOpts []string
 	for k, v := range params {
 		setOpts = append(setOpts, "--set")
