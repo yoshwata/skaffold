@@ -168,10 +168,7 @@ func (h *HelmDeployer) deployRelease(ctx context.Context, out io.Writer, r lates
 		color.Red.Fprintf(out, "Helm release %s not installed. Installing...\n", releaseName)
 		isInstalled = false
 	}
-	params := map[string]build.Artifact{}
-	if len(builds) != 0 {
-		params, err = h.joinTagsToBuildResult(builds, r.Values)
-	}
+	params, err := h.joinTagsToBuildResult(builds, r.Values)
 	if err != nil {
 		return nil, errors.Wrap(err, "matching build results to chart values")
 	}
